@@ -20,14 +20,14 @@ function _menus()
         } else {
              $html  .= "<li class='sidebar-item'>";
         }
-        $html .= "<a href='".$menu['link']."' class='sidebar-link'>
-                     <i class='".url($menu['icon'])."'></i>
+        $html .= "<a href='".($menu['all_children'] ? '#' : url($menu['link']))."' class='sidebar-link'>
+                     <i class='".$menu['icon']."'></i>
                      <span>".$menu['menu']."</span>
                  </a>";
         if ($menu['all_children']) {
-            $html .= "<ul class='submenu'>";
+            $html .= "<ul class='submenu ".(request()->segment(1) == $menu['link'] ? 'active' : '')."'>";
             foreach($menu['all_children'] as $child) {
-                $html .= "<li class='submenu-item'>
+                $html .= "<li class='submenu-item ".(request()->is($child['link']) ? 'active' : '')."'>
                             <a href='".url($child['link'])."'>
                             <i class='".$child['icon']."'></i>
                             <span>".$child['menu']."</span></a>";

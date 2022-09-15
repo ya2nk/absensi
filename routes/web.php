@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ {
+	AuthController,HomeController
+};
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,4 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', "HomeController@index");
+Route::get('/', [AuthController::class,"index"]);
+
+Route::get('/login',[AuthController::class,"loginView"]);
+Route::post('/login',[AuthController::class,"login"]);
+
+Route::middleware(['auth'])->group(function(){
+	Route::get('/dashboard',[HomeController::class,"index"]);
+	
+	Route::name('master')
+		->prefix('master')
+		->group(__DIR__ . '/web/master.php');
+});
