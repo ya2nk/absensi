@@ -73,6 +73,8 @@
                 @yield("content")
             </div>
         </div>
+        
+        @stack("modals")
             
     </div>
     <script src="{{ asset('template/assets/js/bootstrap.js') }}"></script>
@@ -82,6 +84,8 @@
     <script src="{{ asset('template/assets/js/alpine-extends.js') }}" defer></script>
     <script src="{{ asset('template/assets/js/alpine.min.js') }}" defer></script>
     <script src="{{ asset('template/assets/js/datatables.min.js') }}"></script>
+    <script src="{{ asset('template/assets/extensions/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('template/assets/extensions/notiflix/dist/notiflix-aio-3.2.5.min.js') }}"></script>
    
     <script>
         $(function(){
@@ -91,7 +95,26 @@
             $('.flatpickr').flatpickr({
                 static:true
             })
-        })
+        });
+        
+        jQuery.validator.setDefaults({
+			errorElement: "span",
+			errorPlacement: function (error, element) {
+				error.addClass('invalid-feedback');
+				element.closest('div').append(error);
+			},
+			highlight: function (element, errorClass, validClass) {
+				$(element).addClass('is-invalid');
+			},
+			unhighlight: function (element, errorClass, validClass) {
+				$(element).removeClass('is-invalid');
+			}
+		});
+        
+        Notiflix.Block.init({
+            zindex: 9000,
+        });
+        
     </script>
     @stack("scripts")
 </body>
