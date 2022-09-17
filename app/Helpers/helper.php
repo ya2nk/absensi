@@ -10,7 +10,9 @@ function akses($menu_id)
 
 function _menus()
 {
-    $menus = Menus::with('allChildren')->where('parent_id',0)->orderBy('position')->get();
+    $menus = Menus::with(['allChildren'=>function($q){
+        $q->orderBy('position');  
+    }])->where('parent_id',0)->orderBy('position')->get();
     $menus = $menus->toArray();
     $html  = "";
     foreach($menus as $menu) {

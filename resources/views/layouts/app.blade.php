@@ -115,6 +115,13 @@
             zindex: 9000,
         });
         
+        function setSelect2Value(id,value,disable)
+        {
+            var select2 = $('#'+id);
+                select2.val(value).trigger('change');
+                select2.prop('disable',disable);
+        }
+        
     </script>
     @stack("scripts")
 </body>
