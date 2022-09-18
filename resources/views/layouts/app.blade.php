@@ -89,9 +89,12 @@
    
     <script>
         $(function(){
-            $('.select2').select2({
-                theme:"bootstrap-5"
-            });
+            $('.select2').each(function(){
+                $(this).select2({
+                    theme:'bootstrap-5',
+                    dropdownParent:$(this).parent()
+                })
+            })
             $('.flatpickr').flatpickr({
                 static:true
             })

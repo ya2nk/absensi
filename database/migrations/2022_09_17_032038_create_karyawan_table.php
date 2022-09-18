@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('nik')->unique();
             $table->string("nama");
-            $table->string('email',100);
             $table->string('jenis_kelamin',20);
             $table->string('alamat');
             $table->string('nomor_telp');
             $table->date('tanggal_lahir');
+            $table->date('tanggal_masuk');
             $table->string('status_perkawinan');
             $table->integer('jabatan_id')->default(0);
             $table->integer('parent_id')->default(0);

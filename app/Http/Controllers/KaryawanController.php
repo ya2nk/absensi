@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Lokasi;
-use App\Models\Area;
+use App\Models\Jabatan;
+use App\Models\Karyawan;
+use App\Models\Roles;
+use DB;
 
 class KaryawanController extends Controller
 {
     function index()
     {
-        $data['area'] = Area::orderBy('nama')->get();
+        $data['jabatan']    = Jabatan::orderBy('nama')->get();
+        $data['atasan']     = Karyawan::where('parent_id',0)->orderBy('nama')->get();
+        $data['roles']      = Roles::orderBy('nama')->get();
         return view('pages.master.karyawan.index',$data);
     }
     
@@ -22,7 +27,16 @@ class KaryawanController extends Controller
     
     function getRow(Request $req)
     {
-        return response(Lokasi::find($req->id));
+        return response(Karyawan::find($req->id));
+    }
+    
+    function getNik(Request $req)
+    {
+        $prefix = date('dm',strtotime($req->tanggal_masuk));
+        $nomor = Karyawan::select(DB::raw("MAX(CAST(SUBSTRING(nik, 4, length(nik)-4) AS UNSIGNED)) as nik"))->value("nik");
+        $nomor = (int)$nomor ?? 0;
+        $nomor++;
+        return $prefix.sprintf("%04s",$nomor);
     }
     
     function save(Request $req)

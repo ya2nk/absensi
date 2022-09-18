@@ -17,7 +17,7 @@ use App\Http\Controllers\ {
 
 Route::get('/', [AuthController::class,"index"]);
 
-Route::get('/login',[AuthController::class,"loginView"]);
+Route::get('/login',[AuthController::class,"loginView"])->name('login');
 Route::post('/login',[AuthController::class,"login"]);
 
 Route::middleware(['auth'])->group(function(){
