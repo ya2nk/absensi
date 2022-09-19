@@ -86,7 +86,7 @@
     <script src="{{ asset('template/assets/js/datatables.min.js') }}"></script>
     <script src="{{ asset('template/assets/extensions/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('template/assets/extensions/notiflix/dist/notiflix-aio-3.2.5.min.js') }}"></script>
-   
+    <script src="{{ asset('template/assets/js/resize.js') }}"></script>
     <script>
         $(function(){
             $('.select2').each(function(){

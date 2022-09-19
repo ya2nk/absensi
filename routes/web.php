@@ -26,4 +26,8 @@ Route::middleware(['auth'])->group(function(){
 	Route::name('master')
 		->prefix('master')
 		->group(__DIR__ . '/web/master.php');
+    
+    Route::name('master-karyawan')
+		->prefix('master-karyawan')
+		->group(__DIR__ . '/web/master_karyawan.php');
 });

@@ -7,6 +7,8 @@ use App\Models\Lokasi;
 use App\Models\Jabatan;
 use App\Models\Karyawan;
 use App\Models\Roles;
+use App\Models\Divisi;
+use App\Models\User;
 use DB;
 
 class KaryawanController extends Controller
@@ -16,6 +18,8 @@ class KaryawanController extends Controller
         $data['jabatan']    = Jabatan::orderBy('nama')->get();
         $data['atasan']     = Karyawan::where('parent_id',0)->orderBy('nama')->get();
         $data['roles']      = Roles::orderBy('nama')->get();
+        $data['lokasi']     = Lokasi::orderBy('nama')->get();
+        $data['divisi']     = Divisi::orderBy('nama')->get();
         return view('pages.master.karyawan.index',$data);
     }
     
@@ -32,7 +36,7 @@ class KaryawanController extends Controller
     
     function getNik(Request $req)
     {
-        $prefix = date('dm',strtotime($req->tanggal_masuk));
+        $prefix = date('ym',strtotime($req->tanggal_masuk));
         $nomor = Karyawan::select(DB::raw("MAX(CAST(SUBSTRING(nik, 4, length(nik)-4) AS UNSIGNED)) as nik"))->value("nik");
         $nomor = (int)$nomor ?? 0;
         $nomor++;
@@ -43,26 +47,44 @@ class KaryawanController extends Controller
     {
         $req->validate([
            'nama' => 'required',
-           'area_id' => 'required',
+           'lokasi_id' => 'required',
+           'jabatan_id' => 'required',
            'alamat' => 'required'
         ]);
         
-        $lokasi = new Lokasi; 
         
-        if ($req->id != 0) {
-            $lokasi = Lokasi::find($req->id);
-        } 
+        $data = $req->except(['role_id','email','password','id']);
         
-        $lokasi->nama = strtoupper($req->nama);
-        $lokasi->area_id = $req->area_id;
-        $lokasi->alamat = $req->alamat;
-        $lokasi->nomor_telp = $req->nomor_telp;
-        
-        if($lokasi->save()) {
-            return response(["error"=>false]);
-        } else {
-             return response(["error"=>true,"message"=>"Data Gagal disimpan"]);
+        try {
+            DB::transaction(function () use($data,$req) {
+                
+                if($row = Karyawan::find($req->id)) {
+                    $row->update($data);
+                }  else {
+                    Karyawan::insert($data);
+                }
+                
+                $dataUser['password'] = \Hash::make($req->password);
+                $dataUser['role_id'] = $req->role_id;
+                $dataUser['username'] = $req->nik;
+                $dataUser['email'] = $req->email;
+                
+                if (User::where('username',$req->nik)->exists()) {
+                    if ($req->password == "") {
+                        unset($dataUser['password']);
+                    }
+                    User::where('username',$req->nik)->update($dataUser);
+                } else {
+                    User::insert($dataUser);
+                }
+                
+            });
+        } catch(\Exception $e) {
+            return response(['error'=>true,'message'=>$e->getMessage()]);
         }
+                            
+        return response(['error'=>false]);
+        
         
     }
     

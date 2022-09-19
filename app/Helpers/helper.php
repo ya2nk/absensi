@@ -41,3 +41,36 @@ function _menus()
     }
     return $html;
 }
+
+function menu_table()
+{
+    $menus = Menus::with(['allChildren'=>function($q){
+        $q->orderBy('position');  
+    }])->where('parent_id',0)->orderBy('position')->get();
+    $menus = $menus->toArray();
+    $html  = "<table class='table'>";
+    $html  = "<tr><th>Nama Menu</th><th>Allow</th></th>Denied</th></tr>";
+    foreach($menus as $menu) {
+       $html .= "<tr>";
+       if ($menu['all_children']) {
+            foreach($menu['all_children'] as $child) {
+                $html .= "<td style='margin-left:5px'>".$child['menu']."</td>";
+                $html .= radio_akses($child['id']);
+            }
+       } else {
+            $html = "<td>".$menu['menu']."</td>";
+            $html .= radio_akses($menu['id']);
+       }
+       
+       $html .= "</tr>";
+    }
+    $html .= "</table>";
+    return $html;
+}
+
+function radio_akses($menu_id)
+{
+    $html = "<td><input type='radio' name='menu[$menu_id]' value='1'> Yes</td>";
+    $html .= "<td><input type='radio' name='menu[$menu_id]' value='0'> No</td>";
+    return $html;
+}

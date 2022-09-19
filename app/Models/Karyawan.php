@@ -9,10 +9,11 @@ class Karyawan extends Model
 {
     use HasFactory;
     protected $table = "karyawan";
+    protected $guarded = [];
     
     function lokasi()
     {
-        return $this->hasMany(KaryawanLokasi::class,"karyawan_id");
+        return $this->hasOne(Lokasi::class,"lokasi_id");
     }
     
     function jabatan()

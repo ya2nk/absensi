@@ -4,14 +4,14 @@
 	<div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Data Karyawan</h3>
+                <h3>Data Divisi</h3>
                 
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Karyawan</li>
+                        <li class="breadcrumb-item active" aria-current="page">Divisi</li>
                     </ol>
                 </nav>
             </div>
@@ -20,7 +20,7 @@
     <section class="section" x-data="main" @reload-table.window="table.draw()">
 		<div class="card">
             <div class="card-header">
-                Data Karyawan
+                Data Roles
                  <div class="float-end">
                     <button class="btn btn-primary" @click="addData" data-id="0"><span class="bi bi-plus">TAMBAH</span></button>
                 </div>
@@ -34,11 +34,7 @@
                         <thead>
                             <tr>
                                 <th>Aksi</th>
-                                <th>NIK</th>
                                 <th>Nama</th>
-                                <th>Jabatan</th>
-                                <th>Alamat</th>
-                                <th>Nomor Telp.</th>
                             </tr>
                         </thead>
                     </table>
@@ -49,7 +45,7 @@
 @endsection
 
 @push("modals")
-    @include("pages.master.karyawan.form")
+    @include("pages.master.divisi.form")
 @endpush
    
 @push('scripts')
@@ -63,23 +59,13 @@
                         processing:true,
                         ajax:{
                             method:"POST",
-                            url:"{{ url('master-karyawan/karyawan/data') }}"
+                            url:"{{ url('master/divisi/data') }}"
                         },
                         columns:[
                             {data:"aksi",render:(data,type,row) => {
                                 var button = "";
                                     button += `<li><a class="dropdown-item" href="#" @click="addData" data-id="${row.id}">EDIT</a></li>`;
                                     button += `<li><a class="dropdown-item" href="#" @click="delData" data-id="${row.id}">DELETE</a></li>`;
-                                    button +=  '<div class="dropdown-divider"></div>';
-                                    if (row.status == 1) {
-                                        button += `<li><a class="dropdown-item" href="#" @click="setStatus" data-id="${row.id}" data-status="0">Set karyawan Non Aktif</a></li>`;
-                                    } else {
-                                        button += `<li><a class="dropdown-item" href="#" @click="setStatus" data-id="${row.id}" data-status="1">Set karyawan Aktif</a></li>`;
-                                    }
-                                    
-                                    button += `<li><a class="dropdown-item" href="#" @click="setGaji" data-id="${row.id}">Set Gaji</a></li>`;
-                                    button += `<li><a class="dropdown-item" href="#" @click="setJamKerja" data-id="${row.id}">Set Jam Kerja</a></li>`;
-                                    button += `<li><a class="dropdown-item" href="#" @click="uploadFile" data-id="${row.id}">Upload File</a></li>`;
                                 return `<div class="dropdown">
                                       <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         AKSI
@@ -89,11 +75,7 @@
                                       </ul>
                                     </div>`
                             }},
-                            {data:"area.nama"},
-                            {data:"nama"},
-                            {data:"jabatan.nama"},
-                            {data:"alamat"},
-                            {data:"nomor_telp"}
+                            {data:"nama"}
                         ]
                     });
 				},
@@ -104,7 +86,7 @@
                 delData() {
                     var id = this.$_data("id");
                     Notiflix.Confirm.show("KONFIRMASI","Apakah yakin akan menghapus data ini?","YA","TIDAK",() => {
-                        $.post("{{ url('master-karyawan/karyawan/delete') }}",{id,id}).done(resp => {
+                        $.post("{{ url('master/divisi/delete') }}",{id,id}).done(resp => {
                             if (resp.error == false) {
                                 Notiflix.Notify.success("Data Berhasil dihapus");
                                 this.table.draw();
