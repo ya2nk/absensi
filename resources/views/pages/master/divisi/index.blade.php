@@ -46,6 +46,7 @@
 
 @push("modals")
     @include("pages.master.divisi.form")
+    @include("pages.master.jam-kerja-karyawan.form")
 @endpush
    
 @push('scripts')
@@ -64,6 +65,7 @@
                         columns:[
                             {data:"aksi",render:(data,type,row) => {
                                 var button = "";
+                                    button += `<li><a class="dropdown-item" href="#" @click="setJamKerja" data-id="${row.id}">SET JAM KERJA</a></li>`;
                                     button += `<li><a class="dropdown-item" href="#" @click="addData" data-id="${row.id}">EDIT</a></li>`;
                                     button += `<li><a class="dropdown-item" href="#" @click="delData" data-id="${row.id}">DELETE</a></li>`;
                                 return `<div class="dropdown">
@@ -97,6 +99,10 @@
                             Notiflix.Notify.failure(err.responseText);
                         })
                     })
+                },
+                setJamKerja() {
+                    var id = this.$_data("id"); 
+                    this.$dispatch("open-form-jam-kerja",{id:0,divisi_id:id,karyawan_id:0});
                 }
 			}));
 		});

@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Divisi;
+use App\Models\JamKerja;
 
 class DivisiController extends Controller
 {
     function index()
     {
-        return view('pages.master.divisi.index');
+        $data['jam_kerja'] = JamKerja::orderBy('nama')->get();
+        return view('pages.master.divisi.index',$data);
     }
     
     function data(Request $req)

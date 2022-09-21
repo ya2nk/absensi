@@ -34,10 +34,10 @@
                         <thead>
                             <tr>
                                 <th>Aksi</th>
-                                <th>Nama</th>
-                                <th>Jam Masuk</th>
-                                <th>Jam Pulang</th>
-                                <th>Crossday</th>
+                                <th>Divisi</th>
+                                <th>Karyawan</th>
+                                <th>Jam Kerja</th>
+                                <th>Tanggal berlaku</th>
                             </tr>
                         </thead>
                     </table>
@@ -48,7 +48,7 @@
 @endsection
 
 @push("modals")
-    @include("pages.master.jam-kerja.form")
+    @include("pages.master.jam-kerja-karyawan.form")
 @endpush
    
 @push('scripts')
@@ -62,7 +62,7 @@
                         processing:true,
                         ajax:{
                             method:"POST",
-                            url:"{{ url('master/jam-kerja/data') }}"
+                            url:"{{ url('master-karyawan/jam-kerja/data') }}"
                         },
                         columns:[
                             {data:"aksi",render:(data,type,row) => {
@@ -78,16 +78,22 @@
                                       </ul>
                                     </div>`
                             }},
-                            {data:"nama"},
-                            {data:"jam_masuk"},
-                            {data:"jam_pulang"},
-                            {data:"crossday"},
+                            {data:"divisi.nama",render:(data) => {
+                                return data == null ? "-" : data;
+                            }},
+                            {data:"karyawan.nama",render:(data) => {
+                                return data == null ? "-" : data;
+                            }},
+                            {data:"jam_kerja.nama",render:(data,type,row) => {
+                                return data == null ? "" : `${data} ( ${row.jam_kerja.jam_masuk} - ${row.jam_kerja.jam_pulang})`;
+                            }},
+                            {data:"tanggal_berlaku"},
                         ]
                     });
 				},
                 addData() {
                     var id = this.$_data("id");
-                    this.$dispatch("open-form",{id:id});
+                    this.$dispatch("open-form-jam-kerja",{id:id,divisi_id:0,karyawan_id:0});
                 },
                 delData() {
                     var id = this.$_data("id");

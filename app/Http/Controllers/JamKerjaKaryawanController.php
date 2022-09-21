@@ -16,7 +16,7 @@ class JamKerjaKaryawanController extends Controller
     
     function data(Request $req)
     {
-        $model = JamKerjaKaryawan::select();
+        $model = JamKerjaKaryawan::with(['divisi','karyawan','jamKerja'])->select();
         return datatables($model->get())->toJson();
     }
     
@@ -28,7 +28,10 @@ class JamKerjaKaryawanController extends Controller
     function save(Request $req)
     {
         $req->validate([
-           'nama' => 'required' 
+            'divisi_id' => 'required',
+            'karyawan_id' => 'required',
+            'jam_kerja_id' => 'required',
+            'tanggal_berlaku' => 'required',
         ]);
         
         $data = new JamKerjaKaryawan; 
@@ -37,10 +40,10 @@ class JamKerjaKaryawanController extends Controller
             $data = JamKerjaKaryawan::find($req->id);
         } 
         
-        $data->nama = strtoupper($req->nama);
-        $data->jam_masuk = $req->jam_masuk;
-        $data->jam_pulang = $req->jam_pulang;
-        $data->crossday = $req->input('crossday',0);
+        $data->divisi_id = $req->divisi_id;
+        $data->karyawan_id = $req->karyawan_id;
+        $data->jam_kerja_id = $req->jam_kerja_id;
+        $data->tanggal_berlaku = $req->tanggal_berlaku;
         
         if($data->save()) {
             return response(["error"=>false]);
