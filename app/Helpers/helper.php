@@ -1,5 +1,5 @@
 <?php
-use App\Models\MenuPermission;
+use App\Models\ { MenuPermission,JamKerjaKaryawan };
 use App\Models\Menus;
 
 function akses($menu_id)
@@ -73,4 +73,18 @@ function radio_akses($menu_id)
     $html = "<td><input type='radio' name='menu[$menu_id]' value='1'> Yes</td>";
     $html .= "<td><input type='radio' name='menu[$menu_id]' value='0'> No</td>";
     return $html;
+}
+
+function getJamKerja($karyawan_id,$divisi_id,$tanggal=null)
+{
+    if ($tanggal == null) {
+       $tanggal = date('Y-m-d');
+    }
+    
+    $jamKerja = JamKerjaKaryawan::where('karyawan_id',$karyawan_id)->where('tanggal_berlaku','<=',$tanggal)->get();
+    if (!$jamKerja) {
+        $jamKerja = JamKerjaKaryawan::where('divisi_id',$divisi_id)->where('tanggal_berlaku','<=',$tanggal)->get();
+    }
+    
+    return $jamKerja;
 }

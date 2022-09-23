@@ -4,9 +4,14 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use App\Trait\ApiResponse;
 
 class Handler extends ExceptionHandler
 {
+    use ApiResponse;
     /**
      * A list of exception types with their corresponding custom log levels.
      *
@@ -46,5 +51,33 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+        
+        $this->renderable(function (HttpException $e, $request) {
+            if ($e->getStatusCode() == 401) {
+                if ($request->is('api/*')) {
+                    return $this->errorResponse("Session Telah Berakhir",401);
+                }
+            }
+            
+            if ($e->getStatusCode() == 419) {
+                if ($request->is('api/*')) {
+                    return $this->errorResponse("Session Telah Berakhir",419);
+                }
+            }
+        });
+        
+        $this->renderable(function (NotFoundHttpException $e, $request) {
+            if ($request->is('api/*')) {
+                return $this->errorResponse("URL Tidak Tersedia",404);
+            }
+        });
+        
+        $this->renderable(function (MethodNotAllowedHttpException $e, $request) {
+            if ($request->is('api/*')) {
+                return $this->errorResponse("Method Tidak Diijinkan",405);
+            }
+        });
+        
+        
     }
 }

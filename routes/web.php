@@ -30,4 +30,8 @@ Route::middleware(['auth'])->group(function(){
     Route::name('master-karyawan')
 		->prefix('master-karyawan')
 		->group(__DIR__ . '/web/master_karyawan.php');
+    
+     Route::name('absensi')
+		->prefix('absensi')
+		->group(__DIR__ . '/web/absensi.php');
 });

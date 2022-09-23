@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\controllers\Api\ { AbsensiController,AuthController,UserController };
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post("/login",[AuthController::class,"login"]);
+
+Route::middleware('auth:sanctum')->group(function() {
+    Route::prefix('v1')->group(function() {
+        Route::post('/absensi',[AbsensiController::class,"absensi"]);
+        Route::post('/profile',[UserController::class,"profile"]);
+    });
 });
+   
