@@ -10,12 +10,12 @@ class AuthController extends ApiController
 {
     function login(Request $request)
     {
-        if (!Auth::attempt($request->only('email', 'password')))
+        if (!Auth::attempt($request->only('username', 'password')))
         {
             return $this->errorResponse('Username atau password yang anda masukan salah!.',401);
         }
         
-        $user = User::where('email', $request['email'])->firstOrFail();
+        $user = User::where('username', $request['username'])->firstOrFail();
 
         $token = $user->createToken('auth_token')->plainTextToken;
 

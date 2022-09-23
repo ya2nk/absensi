@@ -44,6 +44,7 @@ return new class extends Migration
             $table->integer('parent_id')->default(0);
             $table->integer('lokasi_id')->default(0);
             $table->integer('divisi_id')->default(0);
+            
             $table->timestamps();
         });
     }

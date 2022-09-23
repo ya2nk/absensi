@@ -7,7 +7,7 @@ use Throwable;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use App\Trait\ApiResponse;
+use App\Traits\ApiResponse;
 
 class Handler extends ExceptionHandler
 {

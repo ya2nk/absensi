@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-lg-5 col-5">
                     <input type="text" id="nama" class="form-control" name="nama"
-                        placeholder="Nama Lokasi" required x-model="form.nama">
+                        placeholder="Nama Lengkap" required x-model="form.nama">
                 </div>
                  <div class="col-lg-1 col-1">
                     <label class="col-form-label">Nama Panggilan</label>
@@ -290,32 +290,7 @@
     document.addEventListener("alpine:init",() => {
         Alpine.data("form",() => ({
             form: {
-                tanggal_masuk:"",
-                tanggal_lahir:"",
-                tempat_lahir:"",
-                nik:"",
-				perent_id:0,
-                jabatan_id:"",
-                nama:"",
-                nama_panggilan:"",
-                jenis_kelamin:"",
-                status_perkawinan:"",
-				alamat:"",
-				nomor_telp:"",
-                email:"",
-                password:"",
-                role_id:"",
-                lokasi_id:"",
-                divisi_id:"",
-                nama_ayah:"",
-                pekerjaan_ayah:"",
-                nama_ibu:"",
-                pekerjaan_ibu:"",
-                nama_kontak1:"",
-                nama_kontak2:"",
-                nomor_telp1:"",
-                nomor_telp2:"",
-                id:0
+                
             },
             attr:{
                 atasan:true,
@@ -374,31 +349,31 @@
             },
             clearForm() {
                 this.form =  {
-					    tanggal_masuk:"",
-                        tanggal_lahir:"",
-                        tempat_lahir:"",
-                        nik:"",
-                        perent_id:0,
-                        jabatan_id:"",
-                        nama:"",
-                        jenis_kelamin:"",
-                        status_perkawinan:"",
-                        alamat:"",
-                        nomor_telp:"",
-                        email:"",
-                        password:"",
-                        role_id:"",
-                        lokasi_id:"",
-                        divisi_id:"",
-                        nama_ayah:"",
-                        pekerjaan_ayah:"",
-                        nama_ibu:"",
-                        pekerjaan_ibu:"",
-                        nama_kontak1:"",
-                        nama_kontak2:"",
-                        nomor_telp1:"",
-                        nomor_telp2:"",
-                        id:0
+				    tanggal_masuk:"",
+                    tanggal_lahir:"",
+                    tempat_lahir:"",
+                    nik:"",
+                    parent_id:0,
+                    jabatan_id:"",
+                    nama:"",
+                    nama_panggilan:"",
+                    jenis_kelamin:"",
+                    alamat:"",
+                    nomor_telp:"",
+                    email:"",
+                    password:"",
+                    role_id:"",
+                    lokasi_id:"",
+                    divisi_id:"",
+                    nama_ayah:"",
+                    pekerjaan_ayah:"",
+                    nama_ibu:"",
+                    pekerjaan_ibu:"",
+                    nama_kontak1:"",
+                    nama_kontak2:"",
+                    nomor_telp1:"",
+                    nomor_telp2:"",
+                    id:0
 				};
 				setSelect2Value('area_id','',false);
             },
