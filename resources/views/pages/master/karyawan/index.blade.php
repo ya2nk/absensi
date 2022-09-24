@@ -50,6 +50,7 @@
 
 @push("modals")
     @include("pages.master.karyawan.form")
+    @include("pages.master.jam-kerja-karyawan.form")
 @endpush
    
 @push('scripts')
@@ -89,7 +90,7 @@
                                       </ul>
                                     </div>`
                             }},
-                            {data:"area.nama"},
+                            {data:"nik"},
                             {data:"nama"},
                             {data:"jabatan.nama"},
                             {data:"alamat"},
@@ -115,6 +116,10 @@
                             Notiflix.Notify.failure(err.responseText);
                         })
                     })
+                },
+                setJamKerja() {
+                    var id = this.$_data("id"); 
+                    this.$dispatch("open-form-jam-kerja",{id:0,divisi_id:0,karyawan_id:id});
                 }
 			}));
 		});

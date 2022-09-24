@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('tanggal');
             $table->time('jam');
             $table->integer('status')->default(0);
+            $table->text("photo")->nullable();
             $table->integer('status_acc')->default(0);
             $table->string('user_acc')->nullable();
             $table->timestamps();

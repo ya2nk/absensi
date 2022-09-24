@@ -9,6 +9,7 @@ use App\Models\Karyawan;
 use App\Models\Roles;
 use App\Models\Divisi;
 use App\Models\User;
+use App\Models\JamKerja;
 use DB;
 
 class KaryawanController extends Controller
@@ -20,6 +21,7 @@ class KaryawanController extends Controller
         $data['roles']      = Roles::orderBy('nama')->get();
         $data['lokasi']     = Lokasi::orderBy('nama')->get();
         $data['divisi']     = Divisi::orderBy('nama')->get();
+        $data['jam_kerja'] = JamKerja::orderBy('nama')->get();
         return view('pages.master.karyawan.index',$data);
     }
     

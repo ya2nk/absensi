@@ -13,11 +13,11 @@ class Karyawan extends Model
     
     function lokasi()
     {
-        return $this->hasOne(Lokasi::class,"lokasi_id");
+        return $this->hasOne(Lokasi::class,"id","lokasi_id");
     }
     
     function jabatan()
     {
-        return $this->hasOne(Jabatan::class,"jabatan_id");
+        return $this->hasOne(Jabatan::class,"id","jabatan_id");
     }
 }

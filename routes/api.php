@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::prefix('v1')->group(function() {
         Route::post('/absensi',[AbsensiController::class,"absensi"]);
         Route::post('/profile',[UserController::class,"profile"]);
+        Route::post("/absensi",[AbsensiController::class,"absensi"]);
     });
 });
    
