@@ -13,15 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('absen', function (Blueprint $table) {
+        Schema::create('lembur', function (Blueprint $table) {
             $table->id();
             $table->string("nik");
-            $table->date("tanggal");
-            $table->integer('jam_kerja_id')->default(0);
-            $table->time('jam_masuk')->nullable();
-            $table->time('jam_pulang')->nullable();
-            $table->time('lembur')->nullable();
-            $table->time('telat')->nullable();
+            $table->date('tanggal');
+            $table->time("jam_mulai");
+            $table->integer('status_acc')->default(0);
+            $table->string("user_acc")->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('absen');
+        Schema::dropIfExists('lembur');
     }
 };

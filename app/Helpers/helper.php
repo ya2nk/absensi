@@ -75,16 +75,24 @@ function radio_akses($menu_id)
     return $html;
 }
 
-function getJamKerja($karyawan_id,$divisi_id,$tanggal=null)
+function getJamKerja($karyawan_id,$divisi_id)
 {
     if ($tanggal == null) {
        $tanggal = date('Y-m-d');
     }
     
-    $jamKerja = JamKerjaKaryawan::where('karyawan_id',$karyawan_id)->where('tanggal_berlaku','<=',$tanggal)->get();
+    $jamKerja = JamKerjaKaryawan::with('jamKerja')->where('karyawan_id',$karyawan_id)->where('tanggal_berlaku','<=',$tanggal)->orderBy('tanggal_berlaku','desc')->first();
     if (!$jamKerja) {
-        $jamKerja = JamKerjaKaryawan::where('divisi_id',$divisi_id)->where('tanggal_berlaku','<=',$tanggal)->get();
+        $jamKerja = JamKerjaKaryawan::with('jamKerja')->where('divisi_id',$divisi_id)->where('tanggal_berlaku','<=',$tanggal)->orderBy('tanggal_berlaku','desc')->first();
     }
     
     return $jamKerja;
+}
+
+function timeDiff($jam1,$jam2)
+{
+    $time1 = new DateTime($jam1);
+    $time2 = new DateTime($jam2);
+    $diff  = $time2->diff($time1);
+    return $diff->format("%H:%i:%s");
 }

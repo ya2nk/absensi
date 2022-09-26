@@ -19,9 +19,16 @@ Route::post("/login",[AuthController::class,"login"]);
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::prefix('v1')->group(function() {
-        Route::post('/absensi',[AbsensiController::class,"absensi"]);
+        
         Route::post('/profile',[UserController::class,"profile"]);
+        
+        Route::get("/absensi",[AbsensiController::class,"listAbsensi"]);
         Route::post("/absensi",[AbsensiController::class,"absensi"]);
+        Route::post("/acc-absensi",[AbsensiController::class,"accAbsen"]);
+        
+        Route::get("lembur",[AbsensiController::class,"listLembur"]);
+        Route::post("lembur",[AbsensiController::class,"upsertLembur"]);
+        Route::post("/acc-lembur",[AbsensiController::class,"accLembur"]);
     });
 });
    

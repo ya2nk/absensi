@@ -25,7 +25,7 @@
              <div class="form-group row align-items-center">
                  
                  <div class="col-lg-3 col-3">
-                    <label class="col-form-label">Tanggal Berlaku</label>
+                    <label class="col-form-label">Status</label>
                 </div>
                 <div class="col-lg-9 col-9">
                     <input type="text" id="tanggal_berlaku" class="form-control flatpickr" name="tanggal_berlaku"
