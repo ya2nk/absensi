@@ -13,14 +13,14 @@ class AbsensiController extends ApiController
     {
         $absen = new Checkinout;
         
-        $absen->nik = $req->nik;
+        $absen->nik = $req->user()->username;
         $absen->tanggal = date('Y-m-d');
         $absen->jam = date('H:i:s');
         $absen->status = $req->status;
         if ($req->hasFile("photo")) {
             $file = $req->file('photo');
             $fileName = $file->getClientOriginalName();
-            $destinationPath = public_path().'/uploads/'.$req->nik.'/' ;
+            $destinationPath = public_path().'/uploads/'.$req->user()->username.'/' ;
             $file->move($destinationPath,$fileName);
             $absen->photo = $fileName;
         }

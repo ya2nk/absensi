@@ -75,7 +75,7 @@ function radio_akses($menu_id)
     return $html;
 }
 
-function getJamKerja($karyawan_id,$divisi_id)
+function getJamKerja($karyawan_id,$divisi_id,$tanggal=null)
 {
     if ($tanggal == null) {
        $tanggal = date('Y-m-d');
